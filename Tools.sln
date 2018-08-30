@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelOperator", "ExcelOpera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolsTest", "ToolsTest\ToolsTest.csproj", "{4ACD49E0-FFD4-4101-9842-34B80B2A4F03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyQuartz", "EasyQuartz\EasyQuartz.csproj", "{6B34D82A-634B-4213-92DF-D2C5CCA5A831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4ACD49E0-FFD4-4101-9842-34B80B2A4F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ACD49E0-FFD4-4101-9842-34B80B2A4F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ACD49E0-FFD4-4101-9842-34B80B2A4F03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B34D82A-634B-4213-92DF-D2C5CCA5A831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B34D82A-634B-4213-92DF-D2C5CCA5A831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B34D82A-634B-4213-92DF-D2C5CCA5A831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B34D82A-634B-4213-92DF-D2C5CCA5A831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
