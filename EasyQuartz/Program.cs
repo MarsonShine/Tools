@@ -7,17 +7,18 @@ using Quartz.Logging;
 using System;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
+using Quartz.Spi;
 
 namespace EasyQuartz
 {
     class Program
     {
-        private static ServiceProvider ServiceProvider { get; set; }
+        private static IServiceProvider m_serviceProvider { get; set; }
+
         static void Main(string[] args)
         {
             var start = new Starup();
-            start.Start();
-            ServiceProvider = start.ServiceProvider;
+            m_serviceProvider = start.Start();
 
             LogProvider.SetCurrentLogProvider(new ConsoleLogProvider());
             RunProgram().GetAwaiter().GetResult();
@@ -30,7 +31,7 @@ namespace EasyQuartz
         {
             try
             {
-                var jobFactory = ServiceProvider.GetService<InjectionableJobFactory>();
+                var jobFactory = m_serviceProvider.GetService<IJobFactory>();
 
                 NameValueCollection props = new NameValueCollection
                 {
@@ -39,8 +40,9 @@ namespace EasyQuartz
                 StdSchedulerFactory factory = new StdSchedulerFactory(props);
 
                 var scheduler = await factory.GetScheduler();
-                var jobdetail = JobBuilder.Create<HelloJob>()
-                    .WithIdentity(nameof(HelloJob), "group1")
+                scheduler.JobFactory = jobFactory;
+                var jobdetail = JobBuilder.Create<SomeScopedJob>()
+                    .WithIdentity(nameof(SomeScopedJob), "group1")
                     .Build();
 
 

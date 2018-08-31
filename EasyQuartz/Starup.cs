@@ -1,6 +1,8 @@
 ﻿using EasyQuartz.JobFactories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Quartz;
+using Quartz.Impl;
 using Quartz.Spi;
 using System;
 using System.Collections.Generic;
@@ -10,16 +12,15 @@ namespace EasyQuartz
 {
     public class Starup
     {
-        public ServiceProvider ServiceProvider { get; private set; }
-
-        public void Start()
+        public IServiceProvider Start()
         {
             var serviceProvider = new ServiceCollection()
                 .AddLogging()
-                .AddTransient<IJobFactory, InjectionableJobFactory>()
+                .AddTransient<IJobFactory>(sp => new InjectionableJobFactory(sp))
+                .AddScoped<ISchedulerFactory>(sp => new StdSchedulerFactory())
                 .BuildServiceProvider();
 
-            ServiceProvider = serviceProvider;
+            return serviceProvider;
         }
     }
 }

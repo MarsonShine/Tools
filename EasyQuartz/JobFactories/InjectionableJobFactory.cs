@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EasyQuartz.Jobs;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Logging;
 using Quartz.Spi;
@@ -12,6 +14,11 @@ namespace EasyQuartz.JobFactories
     public class InjectionableJobFactory : IJobFactory
     {
         private static readonly ILogger log = new LoggerFactory().CreateLogger<InjectionableJobFactory>();
+        private readonly IServiceProvider m_serviceProvider;
+        public InjectionableJobFactory(IServiceProvider serviceProvider)
+        {
+            m_serviceProvider = serviceProvider;
+        }
 
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
@@ -20,7 +27,8 @@ namespace EasyQuartz.JobFactories
             try
             {
                 log.LogInformation($"Producing instance of Job '{jobDetail.Key}', class={jobType.FullName}");
-                return ObjectUtils.InstantiateType<IJob>(jobType);
+                //return ObjectUtils.InstantiateType<IJob>(jobType);
+                return new SomeScopedJob(m_serviceProvider);
             }
             catch (Exception e)
             {
