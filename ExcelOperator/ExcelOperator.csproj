@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractDataExport.cs" />
+    <Compile Include="AbstractDataExportBridge.cs" />
     <Compile Include="CalculateTool.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Excel2003Operator.cs" />

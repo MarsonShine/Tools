@@ -22,5 +22,10 @@ namespace ExcelOperator
             var excelOperator = ExcelOperatorFactory.CreateExcelOperator(filepath);
             excelOperator.WriteTable(dt, filepath);
         }
+
+        public static void WriteExcel<T>(List<T> resource, string filepath) {
+            var excelOperator = new AbstractDataExportBridge();
+            excelOperator.WriteData(resource);
+        }
     }
 }
