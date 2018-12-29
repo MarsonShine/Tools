@@ -88,48 +88,43 @@ namespace ExcelOperator
                 IRow row1 = sheet.CreateRow(i + 1);
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
-                    ICell cell;
-                    switch (dt.Columns[j].DataType.ToString())
-                    {
-                        case "System.String":
-                            cell = row1.CreateCell(j, CellType.String);
-                            cell.SetCellValue(dt.Rows[i][j].ToString());
-                            break;
-                        case "System.DateTime":
-                            cell = row1.CreateCell(j);
-                            DateTime timeV;
-                            DateTime.TryParse(dt.Rows[i][j].ToString(), out timeV);
-                            cell.SetCellValue(timeV);
-                            break;
-                        case "System.Int16"://整型   
-                        case "System.Int32":
-                        case "System.Int64":
-                            cell = row1.CreateCell(j, CellType.Numeric);
-                            int intV = 0;
-                            int.TryParse(dt.Rows[i][j].ToString(), out intV);
-                            cell.SetCellValue(intV);
-                            break;
-                        case "System.Decimal"://浮点型   
-                        case "System.Double":
-                            cell = row1.CreateCell(j, CellType.Numeric);
-                            double doubleV = 0;
-                            double.TryParse(dt.Rows[i][j].ToString(), out doubleV);
-                            cell.SetCellValue(doubleV);
-                            break;
-                        case "System.DBNull":
-                        default:
-                            cell = row1.CreateCell(j);
-                            cell.SetCellValue(dt.Rows[i][j].ToString());
-                            break;
-                    }
-                    
+                    ICell cell = row1.CreateCell(j);
+                    SetCell(cell, dt.Rows[i][j].ToString(), dt.Columns[j].DataType);
                 }
             }
         }
 
-        private void SetFormatCell(IRow row, string value, CellType cellType)
+        private static void SetCell(ICell cell, string value, Type columnType)
         {
-            
+            switch (columnType.ToString())
+            {
+                case "System.String":
+                    cell.SetCellValue(value);
+                    cell.SetCellType(CellType.String);
+                    break;
+                case "System.DateTime":
+                    DateTime timeV;
+                    DateTime.TryParse(value, out timeV);
+                    cell.SetCellValue(timeV);
+                    break;
+                case "System.Int16"://整型   
+                case "System.Int32":
+                case "System.Int64":
+                    int intV = 0;
+                    int.TryParse(value, out intV);
+                    cell.SetCellValue(intV);
+                    break;
+                case "System.Decimal"://浮点型   
+                case "System.Double":
+                    double doubleV = 0;
+                    double.TryParse(value, out doubleV);
+                    cell.SetCellValue(doubleV);
+                    break;
+                case "System.DBNull":
+                default:
+                    cell.SetCellValue(value);
+                    break;
+            }
         }
     }
 }
