@@ -13,17 +13,17 @@ namespace ExcelOperator
         public static object GetCellValueType(ICell cell)
         {
             if (cell == null)
-                return null;
+                return DBNull.Value;
             switch (cell.CellType)
             {
                 case CellType.Unknown:
-                    return null;
+                    return DBNull.Value;
                 case CellType.Numeric:
                     return cell.NumericCellValue;
                 case CellType.String:
                     return cell.StringCellValue;
                 case CellType.Blank:
-                    return null;
+                    return DBNull.Value;
                 case CellType.Boolean:
                     return cell.BooleanCellValue;
                 case CellType.Error:
@@ -67,6 +67,25 @@ namespace ExcelOperator
                 else
                 {
                     dt.Columns.Add(new DataColumn(cellValue.ToString()));
+                }
+                columns.Add(i);
+            }
+        }
+
+        public static void ReadHeader(IRow header, DataTable dt, List<int> columns, Func<string, int, Type> callback)
+        {
+            for (int i = 0; i < header.LastCellNum; i++)
+            {
+                var cellValue = CalculateTool.GetCellValueType(header.GetCell(i));
+                if (cellValue == null || cellValue.ToString() == string.Empty)
+                {
+                    var type = callback(cellValue.ToString(), i);
+                    dt.Columns.Add(new DataColumn("Columns" + i, type));
+                }
+                else
+                {
+                    var type = callback(cellValue.ToString(), i);
+                    dt.Columns.Add(new DataColumn(cellValue.ToString(), type));
                 }
                 columns.Add(i);
             }

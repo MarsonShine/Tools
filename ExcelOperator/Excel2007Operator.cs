@@ -33,6 +33,21 @@ namespace ExcelOperator
             }
         }
 
+        public DataTable ReadExcel(string filepath, Func<string, int, Type> callback)
+        {
+            using (FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+            {
+                XSSFWorkbook xssfworkbook = new XSSFWorkbook(fs);
+                ISheet sheet = xssfworkbook.GetSheetAt(0);
+                IRow header = sheet.GetRow(sheet.FirstRowNum);
+                List<int> columns = new List<int>();
+                DataTable dt = new DataTable();
+                CalculateTool.ReadHeader(header, dt, columns, callback);
+                CalculateTool.ReadBody(sheet, dt, columns);
+                return dt;
+            }
+        }
+
         public override void WriteTable(DataTable dt, string filepath)
         {
             XSSFWorkbook xssfworkbook = new XSSFWorkbook();
