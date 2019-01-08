@@ -66,5 +66,23 @@ namespace ExcelOperator
                 }
             }
         }
+
+        public void WriteTableNoTitle(DataTable dt,string filepath)
+        {
+            XSSFWorkbook xssfworkbook = new XSSFWorkbook();
+            ISheet sheet = xssfworkbook.CreateSheet(dt.TableName == "" ? FILE_NAME : dt.TableName);
+            CalculateTool.WriteBody(sheet, dt);
+            
+            using (MemoryStream ms = new MemoryStream())
+            {
+                xssfworkbook.Write(ms);
+                var buf = ms.ToArray();
+                using (FileStream fs = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(buf, 0, buf.Length);
+                    fs.Flush();
+                }
+            }
+        }
     }
 }
