@@ -13,17 +13,17 @@ namespace ExcelOperator
         public static object GetCellValueType(ICell cell)
         {
             if (cell == null)
-                return null;
+                return DBNull.Value;
             switch (cell.CellType)
             {
                 case CellType.Unknown:
-                    return null;
+                    return DBNull.Value;
                 case CellType.Numeric:
                     return cell.NumericCellValue;
                 case CellType.String:
                     return cell.StringCellValue;
                 case CellType.Blank:
-                    return null;
+                    return DBNull.Value;
                 case CellType.Boolean:
                     return cell.BooleanCellValue;
                 case CellType.Error:
@@ -72,6 +72,25 @@ namespace ExcelOperator
             }
         }
 
+        public static void ReadHeader(IRow header, DataTable dt, List<int> columns, Func<string, int, Type> callback)
+        {
+            for (int i = 0; i < header.LastCellNum; i++)
+            {
+                var cellValue = CalculateTool.GetCellValueType(header.GetCell(i));
+                if (cellValue == null || cellValue.ToString() == string.Empty)
+                {
+                    var type = callback(cellValue.ToString(), i);
+                    dt.Columns.Add(new DataColumn("Columns" + i, type));
+                }
+                else
+                {
+                    var type = callback(cellValue.ToString(), i);
+                    dt.Columns.Add(new DataColumn(cellValue.ToString(), type));
+                }
+                columns.Add(i);
+            }
+        }
+
         public static void WriteHeader(IRow header, DataTable dt)
         {
             for (int i = 0; i < dt.Columns.Count; i++)
@@ -89,8 +108,41 @@ namespace ExcelOperator
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     ICell cell = row1.CreateCell(j);
-                    cell.SetCellValue(dt.Rows[i][j].ToString());
+                    SetCell(cell, dt.Rows[i][j].ToString(), dt.Columns[j].DataType);
                 }
+            }
+        }
+
+        private static void SetCell(ICell cell, string value, Type columnType)
+        {
+            switch (columnType.ToString())
+            {
+                case "System.String":
+                    cell.SetCellValue(value);
+                    cell.SetCellType(CellType.String);
+                    break;
+                case "System.DateTime":
+                    DateTime timeV;
+                    DateTime.TryParse(value, out timeV);
+                    cell.SetCellValue(timeV);
+                    break;
+                case "System.Int16"://整型   
+                case "System.Int32":
+                case "System.Int64":
+                    int intV = 0;
+                    int.TryParse(value, out intV);
+                    cell.SetCellValue(intV);
+                    break;
+                case "System.Decimal"://浮点型   
+                case "System.Double":
+                    double doubleV = 0;
+                    double.TryParse(value, out doubleV);
+                    cell.SetCellValue(doubleV);
+                    break;
+                case "System.DBNull":
+                default:
+                    cell.SetCellValue(value);
+                    break;
             }
         }
     }

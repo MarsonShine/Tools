@@ -23,9 +23,16 @@ namespace ExcelOperator
             excelOperator.WriteTable(dt, filepath);
         }
 
-        public static void WriteExcel<T>(List<T> resource, string filepath) {
+        public static void WriteExcel<T>(List<T> resource, string filepath)
+        {
             var excelOperator = new AbstractDataExportBridge();
             excelOperator.WriteData(resource);
+        }
+
+        public static DataTable ReadTable(string filepath, Func<string, int, Type> columnTypeEvent)
+        {
+            var excelOperator = new Excel2007Operator(filepath);
+            return excelOperator.ReadExcel(filepath, columnTypeEvent);
         }
     }
 }
