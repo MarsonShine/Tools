@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyQuartz", "EasyQuartz\Ea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipartParser", "MultipartParser\MultipartParser.csproj", "{ABD592AB-D34D-40F1-B2B4-052AE0E36657}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExtractor", "FileExtractor\FileExtractor.csproj", "{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ABD592AB-D34D-40F1-B2B4-052AE0E36657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD592AB-D34D-40F1-B2B4-052AE0E36657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD592AB-D34D-40F1-B2B4-052AE0E36657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
