@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace FileExtractor
 {
@@ -11,6 +10,7 @@ namespace FileExtractor
             if (string.IsNullOrEmpty(wwwrootPath)) return;
             FileFinder finder = new FileFinder();
             finder.Start(wwwrootPath);
+            
         }
     }
 }
