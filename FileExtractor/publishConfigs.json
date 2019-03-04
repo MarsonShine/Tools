@@ -1,7 +1,7 @@
 {
   "PublishConfig": {
-    "InUrl": "F:\\MS\\S-上传服务器版本\\D-Devolopement",
-    "OutUrl": "F:\\MS\\S-上传服务器版本\\D-Devolopement\\YHWeb\\wwwroot",
-    "History": "F:\\MS\\S-上传服务器版本\\D-Devolopement\\YHWeb\\hostory"
+    "InUPath": "F:\\MS\\S-上传服务器版本\\D-Devolopement",
+    "OutPath": "F:\\MS\\S-上传服务器版本\\D-Devolopement\\YHWeb\\wwwroot",
+    "HistoryFolderPath": "F:\\MS\\S-上传服务器版本\\D-Devolopement\\YHWeb\\hostory"
   }
 }
