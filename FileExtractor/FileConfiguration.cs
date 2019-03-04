@@ -8,13 +8,17 @@ namespace FileExtractor
 {
     public class FileConfiguration
     {
-        private static readonly IConfiguration configuration;
-        static FileConfiguration() {
-            var builder = new ConfigurationBuilder()
+        private static readonly IConfiguration configuration = 
+            new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("publishConfigs.json",optional: true);
-            configuration = builder.Build();
-        }
+                .AddJsonFile("publishConfigs.json", optional: true)
+                .Build();
+
         public static IConfiguration Configuration => configuration;
+
+        public PublishConfig GetPublishConfig()
+        {
+            return configuration.GetSection("PublishConfig").Get<PublishConfig>();
+        }
     }
 }

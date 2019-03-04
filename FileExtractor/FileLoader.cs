@@ -4,11 +4,20 @@ namespace FileExtractor
 {
     public class FileLoader
     {
-        private FileConfiguration Configuration;
-
+        public readonly FileConfiguration fileConfiguration;
         public FileLoader()
         {
-            //FileConfiguration.Configuration
+            fileConfiguration = new FileConfiguration();
         }
+
+        public void Load()
+        {
+            var historyPath = fileConfiguration.GetPublishConfig().HistoryFolderPath;
+
+        }
+
+        public IConfiguration Configuration = FileConfiguration.Configuration;
+
+        public FileConfiguration FileConfiguration => fileConfiguration;
     }
 }
