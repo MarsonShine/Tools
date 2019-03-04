@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FileExtractor
@@ -14,6 +16,17 @@ namespace FileExtractor
             this.fileFinder = fileFinder;
         }
 
+        public void Extractor()
+        {
+            FileComparer(fileFinder.Context.Container.Value, fileLoader.HistoryLastWriteFiles);
+        }
 
+        private void FileComparer(ConcurrentDictionary<int, FileInfo> fileInfoDictionary, HashFileCollection historyFiles)
+        {
+            foreach (var kp in fileInfoDictionary)
+            {
+                
+            }
+        }
     }
 }
