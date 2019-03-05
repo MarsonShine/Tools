@@ -9,13 +9,17 @@ namespace FileExtractor
     {
         private readonly FilePublishTimeDictionary hashFilePubilishContainer;
         private readonly HashFileCollection hashFileCollection;
+        private readonly FileInfoCollection fileInfoCollection;
 
-        public ExtractorContext() {
+        public ExtractorContext()
+        {
             hashFileCollection = new HashFileCollection();
             hashFilePubilishContainer = new FilePublishTimeDictionary();
+            fileInfoCollection = new FileInfoCollection();
         }
 
         public FilePublishTimeDictionary Container => hashFilePubilishContainer;
         public HashFileCollection HashFileCollection => hashFileCollection;
+        public FileInfoCollection FileInfoCollection => fileInfoCollection;
     }
 }
