@@ -12,7 +12,7 @@ namespace ExcelOperator
 {
     public class ExcelOperatorFactory
     {
-        public static NpoiExcelOperator CreateExcelOperator(string filepath)
+        public static ExcelOperator CreateExcelOperator(string filepath)
         {
             var excelType = GetExcelType(Path.GetExtension(filepath));
             switch (excelType)
@@ -20,8 +20,11 @@ namespace ExcelOperator
                 case ExcelType.Excel2007:
                     return new Excel2007Operator(filepath);
                 case ExcelType.Excel2003:
-                default:
                     return new Excel2003Operator(filepath);
+                case ExcelType.Csv:
+                    return new CsvOperator();
+                default:
+                    return new Excel2007Operator(filepath);
             }
         }
 
@@ -35,7 +38,9 @@ namespace ExcelOperator
             {
                 return ExcelType.Excel2007;
             }
-            return ExcelType.Excel2003;
+            if (string.Compare(fileExtension, ".csv", ignoreCase: true) == 0)
+                return ExcelType.Csv;
+            return ExcelType.Excel2007;
         }
     }
 }

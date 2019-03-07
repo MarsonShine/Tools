@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ExcelOperator
 {
-    public class Excel2007Operator : NpoiExcelOperator
+    public class Excel2007Operator : ExcelOperator
     {
         private readonly string _filepath;
 
