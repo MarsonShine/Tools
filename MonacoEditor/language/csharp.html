@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" data-name="vs/editor/editor.main"
+        href="../node_modules/monaco-editor/min/vs/editor/editor.main.css">
+    <title>csharp</title>
+</head>
+
+<body>
+    <h2>Monaco Editor CSharp</h2>
+    <div id="editor" class="csharp" style="width:800px;height:600px;border:1px solid grey"></div>
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script>var require = { paths: { 'vs': '../node_modules/monaco-editor/min/vs' } };</script>
+    <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="../node_modules/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+    <script src="../node_modules/monaco-editor/min/vs/editor/editor.main.js"></script>
+
+    <script>
+        function xhr(url, cb) {
+            var request = new XMLHttpRequest();
+            request.open("GET", url);
+            request.onreadystatechange = function () {
+                var DONE = this.DONE || 4;
+                if (this.readyState == DONE) {
+                    cb(false, this.responseText);
+                }
+            }
+            request.responseType = "text";
+            request.setRequestHeader("Content-Type", "html");
+            request.send(null);
+        }
+        function loadSample(mode) {
+            xhr(mode.sampleURL, function (err, data) {
+                if (err) {
+                    if (editor) {
+                        if (editor.getModel()) {
+                            editor.getModel().dispose();
+                        }
+                        editor.dispose();
+                        editor = null;
+                    }
+                    $('#editor').empty();
+                    $('#editor').append('<p class="alert alert-error">Failed to load ' + mode.modeId + ' sample</p>');
+                    return;
+                }
+
+                if (!editor) {
+                    $('#editor').empty();
+                    editor = monaco.editor.create(document.getElementById('editor'), {
+                        model: null,
+                    });
+                }
+
+                var oldModel = editor.getModel();
+                var newModel = monaco.editor.createModel(data, mode.modeId);
+                editor.setModel(newModel);
+                if (oldModel) {
+                    oldModel.dispose();
+                }
+            })
+        }
+        var MODES = (function () {
+            var modesIds = monaco.languages.getLanguages().map(function (lang) { return lang.id; });
+            modesIds.sort();
+            return modesIds.map(function (modeId) {
+                return {
+                    modeId: modeId,
+                    sampleURL: 'index/samples/sample.' + modeId + '.txt'
+                };
+            });
+        })();
+        const lang = document.querySelector("#editor").className;
+        var mode = MODES.filter(m => m.modeId == lang)[0];
+        loadSample(mode);
+        // var editor = monaco.editor.create(document.getElementById('editor'), {
+        //     value: [
+        //         'function x() {',
+        //         '\tconsole.log("Hello world!");',
+        //         '}'
+        //     ].join('\n'),
+        //     language: 'csharp'
+        // });
+    </script>
+
+</body>
+
+</html>
