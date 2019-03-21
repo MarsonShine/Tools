@@ -9,6 +9,7 @@ namespace ExcelOperator
     public enum ExcelType
     {
         Excel2003,
-        Excel2007
+        Excel2007,
+        Csv
     }
 }

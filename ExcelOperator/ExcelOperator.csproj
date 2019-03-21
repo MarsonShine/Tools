@@ -33,6 +33,9 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\..\..\YHGlobalTooProject\YFTransferCostStatisticalTable\packages\LumenWorksCsvReader.4.0.0\lib\net461\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
     </Reference>
@@ -59,8 +62,10 @@
     <Compile Include="AbstractDataExportBridge.cs" />
     <Compile Include="CalculateTool.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="CsvReader.cs" />
     <Compile Include="Excel2003Operator.cs" />
     <Compile Include="Excel2007Operator.cs" />
+    <Compile Include="ExcelExtensions.cs" />
     <Compile Include="ExcelOperatorFactory.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ExcelType.cs" />
