@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipartParser", "Multipar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileExtractor", "FileExtractor\FileExtractor.csproj", "{C083A662-DC3F-4DB7-B26F-0AEE0AD4E4F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enumeration", "Enumeration\Enumeration.csproj", "{0ADF5C8D-2FEB-4658-AF1B-2D2E897C0C65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enumeration", "Enumeration\Enumeration.csproj", "{0ADF5C8D-2FEB-4658-AF1B-2D2E897C0C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enumeration.Test", "Enumeration.Test\Enumeration.Test.csproj", "{54B7ADE5-D372-4D44-8DD9-659635928665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enumeration.Test", "Enumeration.Test\Enumeration.Test.csproj", "{54B7ADE5-D372-4D44-8DD9-659635928665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptchaCore", "CaptchaCore\CaptchaCore.csproj", "{F23FB8BC-246F-4C90-A968-6D7DACD73095}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{54B7ADE5-D372-4D44-8DD9-659635928665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54B7ADE5-D372-4D44-8DD9-659635928665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54B7ADE5-D372-4D44-8DD9-659635928665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F23FB8BC-246F-4C90-A968-6D7DACD73095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F23FB8BC-246F-4C90-A968-6D7DACD73095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F23FB8BC-246F-4C90-A968-6D7DACD73095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F23FB8BC-246F-4C90-A968-6D7DACD73095}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

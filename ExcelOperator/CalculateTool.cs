@@ -1,7 +1,9 @@
-﻿using NPOI.SS.UserModel;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ namespace ExcelOperator
 {
     internal class CalculateTool
     {
+        private static DataFormatter dataFormatter = new DataFormatter(CultureInfo.CurrentCulture);
         public static object GetCellValueType(ICell cell)
         {
             if (cell == null)
@@ -19,6 +22,9 @@ namespace ExcelOperator
                 case CellType.Unknown:
                     return DBNull.Value;
                 case CellType.Numeric:
+                    //这里存在时间格式的问题，
+                    if (DateUtil.IsCellDateFormatted(cell))
+                        return cell.DateCellValue;
                     return cell.NumericCellValue;
                 case CellType.String:
                     return cell.StringCellValue;
