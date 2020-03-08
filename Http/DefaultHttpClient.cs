@@ -14,9 +14,9 @@ namespace Http.Abstract {
         }
 
         public async Task<T> DeleteAsync<T>(string api, object body = null, RequestType requestType = RequestType.QueryString, Dictionary<string, string> header = null) {
-            var request = CreateRequest(api, body, HttpMethod.Get, requestType);
+            var request = CreateRequest(api, body, HttpMethod.Delete, requestType);
             AddHeaders(request, header);
-            SetAuthorization(request);
+            SetAuthorization();
 
             var r = await _httpClient.SendAsync(request);
             if (r.IsSuccessStatusCode) {
@@ -28,16 +28,34 @@ namespace Http.Abstract {
 
         }
 
-        public Task<T> GetAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
-            throw new System.NotImplementedException();
+        public async Task<T> GetAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
+            var request = CreateRequest(api, body, HttpMethod.Get, requestType);
+            AddHeaders(request, header);
+            SetAuthorization();
+            return await SendAsync<T>(request);
+        }
+        private async Task<T> SendAsync<T>(HttpRequestMessage request) {
+            var r = await _httpClient.SendAsync(request);
+            if (r.IsSuccessStatusCode) {
+                var content = await r.Content.ReadAsStringAsync();
+                if (typeof(string) == typeof(T)) return (T) (object) content;
+                return JsonHelper.Deserialize<T>(content);
+            } else {
+                return default;
+            }
+        }
+        public async Task<T> PatchAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
+            var request = CreateRequest(api, body, HttpMethod.Patch, requestType);
+            AddHeaders(request, header);
+            SetAuthorization();
+            return await SendAsync<T>(request);
         }
 
-        public Task<T> PatchAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<T> PostAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
-            throw new System.NotImplementedException();
+        public async Task<T> PostAsync<T>(string api, object body = null, RequestType requestType = default, Dictionary<string, string> header = null) {
+            var request = CreateRequest(api, body, HttpMethod.Patch, requestType);
+            AddHeaders(request, header);
+            SetAuthorization();
+            return await SendAsync<T>(request);
         }
 
         private HttpRequestMessage CreateRequest(string api, object body, HttpMethod httpMethod, RequestType requestType) {
@@ -63,8 +81,10 @@ namespace Http.Abstract {
                 hrm.Headers.Add(item.Key, item.Value);
             }
         }
-        private void SetAuthorization(HttpRequestMessage hrm) {
+        private void SetAuthorization(string scheme = null, string value = null) {
+            if (string.IsNullOrEmpty(scheme) || string.IsNullOrEmpty(value)) return;
 
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(scheme, value);
         }
     }
 }
