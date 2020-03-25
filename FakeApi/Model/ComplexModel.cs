@@ -9,6 +9,9 @@ namespace FakeApi.Model {
         public long Lid { get; set; }
         public StatusEnum Status { get; set; }
         public List<SimpleModel> Simples { get; set; }
+        public string[] GradeIds { get; set; }
+        public DateTime? UpdationTime { get; set; }
+        public SimpleModel[] SimpleArray { get; set; }
 
     }
 
