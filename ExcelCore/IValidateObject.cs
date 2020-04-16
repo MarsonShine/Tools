@@ -1,8 +1,7 @@
 namespace ExcelCore
 {
-    public interface IValidateObject
+    public interface IValidateObject: IExcelError
     {
         bool Validate();
-        string ErrorMessage { get; }
     }
 }

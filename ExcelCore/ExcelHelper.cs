@@ -17,6 +17,8 @@ namespace ExcelCore
         private ISheet sheet;
         private IRow title, rows;
         private int[] columnsIndex;
+        private int sheetIndex, titleRowIndex, contentRowIndex;
+
         public byte[] Export<T>(List<T> source, string fileName = "demo.xlsx", string sheetName = "sheet1") where T : IExcelEntity
         {
             workbook = new XSSFWorkbook();
@@ -63,6 +65,27 @@ namespace ExcelCore
             {
                 title.CreateCell(i).SetCellValue(attrs[i].Name);
             }
+        }
+
+        public ExcelHelper OpenExcel(string path)
+        {
+            using var file = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
+            if (path.EndsWith(".xls"))
+            {
+                workbook = new HSSFWorkbook(file);
+            }
+            workbook = new XSSFWorkbook(file);
+
+            sheet = workbook.GetSheetAt(sheetIndex);
+            rows = sheet.GetRow(contentRowIndex + 1);
+
+            return this;
+        }
+
+        public DynamicExcelBuilder LoadSource<T>(List<T> source, List<ExcelOperationResultDescriptor> resultDescriptors)
+            where T : IExcelEntity
+        {
+            return new DynamicExcelBuilder(new ExcelContext(workbook, sheet, titleRowIndex, contentRowIndex, source.Cast<IExcelEntity>().ToList(), resultDescriptors));
         }
 
         private void SetExcelRowBody(object obj, List<PropertyInfo> properties)
@@ -119,6 +142,19 @@ namespace ExcelCore
             ReadCellValueAndFillToList(propertys, list);
 
             return list;
+        }
+
+        public ExcelHelper InitSheetIndex(int sheetIndex)
+        {
+            this.sheetIndex = sheetIndex;
+            return this;
+        }
+
+        public ExcelHelper InitStartReadRowIndex(int titleRowIndex, int contentRowIndex)
+        {
+            this.titleRowIndex = titleRowIndex;
+            this.contentRowIndex = contentRowIndex;
+            return this;
         }
 
         private void ReadCellValueAndFillToList<T>(PropertyInfo[] propertys, IList<T> list)

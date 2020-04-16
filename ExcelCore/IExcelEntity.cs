@@ -1,6 +1,6 @@
 ﻿namespace ExcelCore
 {
-    public interface IExcelEntity
+    public interface IExcelEntity : IValidateObject
     {
     }
 }

@@ -14,5 +14,6 @@ namespace ExcelCore
         public string Name { get; set; }
         public int Order { get; set; }
         public bool Ignore { get; set; }
+        public string FontColor { get; set; }
     }
 }
