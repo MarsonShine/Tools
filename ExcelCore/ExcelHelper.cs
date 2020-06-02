@@ -17,8 +17,7 @@ namespace ExcelCore
         private ISheet sheet;
         private IRow title, rows;
         private int[] columnsIndex;
-        private int sheetIndex, titleRowIndex, contentRowIndex;
-
+        private int sheetIndex = -1, titleRowIndex = -1, contentRowIndex = -1;
         public byte[] Export<T>(List<T> source, string fileName = "demo.xlsx", string sheetName = "sheet1") where T : IExcelEntity
         {
             workbook = new XSSFWorkbook();
@@ -63,7 +62,7 @@ namespace ExcelCore
 
             for (int i = 0; i < attrs.Count; i++)
             {
-                title.CreateCell(i).SetCellValue(attrs[i].Name);
+                title.CreateCell(i).SetCellValue(attrs[i].Name.Trim());
             }
         }
 
@@ -80,6 +79,16 @@ namespace ExcelCore
             rows = sheet.GetRow(contentRowIndex + 1);
 
             return this;
+        }
+
+        public DynamicExcelBuilder OpenExcel(Stream stream, List<IExcelEntity> source, List<ExcelOperationResultDescriptor> resultDescriptors)
+        {
+            using var fs = stream;
+            var workbook = new XSSFWorkbook(fs);
+            var sheet = workbook.GetSheetAt(sheetIndex);
+            var rows = sheet.GetRow(contentRowIndex + 1);
+
+            return new DynamicExcelBuilder(new ExcelContext(workbook, sheet, titleRowIndex, contentRowIndex, source, resultDescriptors));
         }
 
         public DynamicExcelBuilder LoadSource<T>(List<T> source, List<ExcelOperationResultDescriptor> resultDescriptors)
@@ -105,45 +114,6 @@ namespace ExcelCore
 
         }
 
-        public List<T> Import<T>(IFormFile file)
-        {
-            MemoryStream ms = new MemoryStream();
-            file.CopyTo(ms);
-            ms.Seek(0, SeekOrigin.Begin);
-            if (file.FileName.EndsWith(".xls"))
-            {
-                workbook = new HSSFWorkbook(ms);
-            }
-            workbook = workbook ?? new XSSFWorkbook(ms);
-            sheet = workbook.GetSheetAt(0);
-            var propertys = typeof(T).GetProperties()
-                .Where(p => p.CustomAttributes.Any(p => p.AttributeType == typeof(ExcelColumnAttribute)))
-                .ToArray();
-
-            var propertyDesc = propertys.Select(p => p.GetCustomAttribute<ExcelColumnAttribute>())
-                .ToArray();
-
-            // 扫描 excel 的标题与 T 对象属性对应
-            var titleRow = sheet.GetRow(0);
-            // 初始化excel标题对应实体属性顺序索引的状态
-            columnsIndex = new int[titleRow.LastCellNum];
-            for (int i = 0; i < titleRow.LastCellNum; i++)
-            {
-                columnsIndex[i] = -1;
-            }
-            for (int i = 0; i < titleRow.LastCellNum; i++)
-            {
-                var excelTitle = titleRow.GetCell(i).ToString();
-                columnsIndex[i] = propertyDesc.FindIndex(p => p.Name == excelTitle);
-            }
-
-            var list = new List<T>();
-
-            ReadCellValueAndFillToList(propertys, list);
-
-            return list;
-        }
-
         public ExcelHelper InitSheetIndex(int sheetIndex)
         {
             this.sheetIndex = sheetIndex;
@@ -157,20 +127,92 @@ namespace ExcelCore
             return this;
         }
 
+        private void AutoAnalyzeSheetIndex()
+        {
+            if (workbook == null) throw new ArgumentNullException("文件读取失败");
+            var sheetCount = workbook.NumberOfSheets;
+            if (sheetCount > 2) throw new ArgumentNullException("模板解析错误，请确认导入的模板格式");
+
+            sheetIndex = sheetCount - 1;
+        }
+
+        public List<T> Import<T>(IFormFile file)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                if (file.FileName.EndsWith(".xls"))
+                {
+                    workbook = new HSSFWorkbook(ms);
+                }
+                workbook = workbook ?? new XSSFWorkbook(ms);
+
+                if (sheetIndex == -1)
+                {
+                    AutoAnalyzeSheetIndex();
+                }
+                if (titleRowIndex == -1)
+                {
+                    throw new InvalidOperationException($"无效操作：请初始化 {nameof(titleRowIndex)} 与 {nameof(contentRowIndex)}，您在解析文件之前应调用方法 InitStartReadRowIndex");
+                }
+
+                sheet = workbook.GetSheetAt(sheetIndex);
+                var propertys = typeof(T).GetProperties()
+                    .Where(p => p.CustomAttributes.Any(p => p.AttributeType == typeof(ExcelColumnAttribute)))
+                    .ToArray();
+
+                var propertyDesc = propertys.Select(p => p.GetCustomAttribute<ExcelColumnAttribute>())
+                    .ToArray();
+
+                // 扫描 excel 的标题与 T 对象属性对应
+                var titleRow = sheet.GetRow(titleRowIndex);
+                // 初始化excel标题对应实体属性顺序索引的状态
+                columnsIndex = new int[titleRow.LastCellNum];
+                for (int i = 0; i < titleRow.LastCellNum; i++)
+                {
+                    columnsIndex[i] = -1;
+                }
+                for (int i = 0; i < titleRow.LastCellNum; i++)
+                {
+                    var cell = titleRow.GetCell(i);
+                    if (cell == null) continue;
+                    var excelTitle = cell.ToString().Trim();
+                    columnsIndex[i] = propertyDesc.FindIndex(p => p.Name.Trim() == excelTitle);
+                }
+
+                var list = new List<T>();
+
+                ReadCellValueAndFillToList(propertys, list);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("模板解析错误，请确认导入的模板格式");
+            }
+        }
+
         private void ReadCellValueAndFillToList<T>(PropertyInfo[] propertys, IList<T> list)
         {
-            var cellNum = sheet.GetRow(1);
+            var cellNum = sheet.GetRow(contentRowIndex);
             string value = null;
 
-            int num = cellNum.LastCellNum;
-            for (int i = 1; i <= sheet.LastRowNum; i++)
+            //int num = cellNum.Cells.Count;
+            for (int i = contentRowIndex; i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
+                if (row == null) continue;
                 var obj = Activator.CreateInstance<T>();
-                for (int j = 0; j < num; j++)
+                for (int j = 0; j < columnsIndex.Length; j++)
                 {
                     var propertyLocation = columnsIndex[j];
                     if (propertyLocation == -1) continue;
+
+                    //空值忽略
+                    if (row.GetCell(j) == null)
+                        continue;
 
                     value = row.GetCell(j).ToString();
                     string str = (propertys[propertyLocation].PropertyType).FullName;
@@ -180,32 +222,32 @@ namespace ExcelCore
                     }
                     else if (str == "System.DateTime")
                     {
-                        DateTime pdt = Convert.ToDateTime(value, CultureInfo.InvariantCulture);
+                        DateTime.TryParse(value, out DateTime pdt);
                         propertys[propertyLocation].SetValue(obj, pdt, null);
                     }
                     else if (str == "System.Boolean")
                     {
-                        bool pb = Convert.ToBoolean(value);
+                        bool.TryParse(value, out bool pb);
                         propertys[propertyLocation].SetValue(obj, pb, null);
                     }
                     else if (str == "System.Int16")
                     {
-                        short pi16 = Convert.ToInt16(value);
+                        short.TryParse(value, out short pi16);
                         propertys[propertyLocation].SetValue(obj, pi16, null);
                     }
                     else if (str == "System.Int32")
                     {
-                        int pi32 = Convert.ToInt32(value);
+                        int.TryParse(value, out int pi32);
                         propertys[propertyLocation].SetValue(obj, pi32, null);
                     }
                     else if (str == "System.Int64")
                     {
-                        long pi64 = Convert.ToInt64(value);
+                        long.TryParse(value, out long pi64);
                         propertys[propertyLocation].SetValue(obj, pi64, null);
                     }
                     else if (str == "System.Byte")
                     {
-                        byte pb = Convert.ToByte(value);
+                        byte.TryParse(value, out byte pb);
                         propertys[propertyLocation].SetValue(obj, pb, null);
                     }
                     else

@@ -26,5 +26,22 @@ namespace ExcelCore
             }
             return -1;
         }
+
+        public static void ForEach<TSource>(this IEnumerable<TSource> source, Action<TSource, int> doAction)
+        {
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            if (doAction == null) throw new ArgumentNullException(nameof(doAction));
+            ForEachInterator(source, doAction);
+        }
+
+        private static void ForEachInterator<TSource>(IEnumerable<TSource> source, Action<TSource, int> dpActoin)
+        {
+            var index = -1;
+            foreach (TSource item in source)
+            {
+                index = checked(index + 1);
+                dpActoin(item, index);
+            }
+        }
     }
 }

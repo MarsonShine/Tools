@@ -81,6 +81,67 @@ namespace ExcelCore
             return this;
         }
 
+        public DynamicExcelBuilder InsertCell(int rowIndex, int columnIndex, string columnValue, CellType cellType = CellType.String)
+        {
+            var sheet = _excelContext.Sheet;
+            var titleRow = sheet.GetRow(rowIndex);
+            var cell = titleRow.CreateCell(columnIndex, cellType);
+            cell?.SetCellValue(columnValue);
+            return this;
+        }
+
+        /// <summary>
+        /// 追加列标题，标题是不允许重复的
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnValue"></param>
+        /// <param name="cellType"></param>
+        /// <param name="cellNumber"></param>
+        /// <returns></returns>
+        public DynamicExcelBuilder AppendTitleCell(int rowIndex, string columnValue, CellType cellType, out int cellNumber)
+        {
+            var sheet = _excelContext.Sheet;
+            var titleIndex = _excelContext.TitleRowIndex;
+            var row = sheet.GetRow(rowIndex);
+            cellNumber = row.LastCellNum;
+            if (IsDuplication(row, columnValue))
+            {
+                return this;
+            }
+            InsertCell(titleIndex, row.LastCellNum, columnValue, cellType);
+            cellNumber++;
+            return this;
+        }
+
+        private bool IsDuplication(IRow row, string columnValue)
+        {
+            var cells = row.Cells;
+            return cells.Any(p => p.StringCellValue == columnValue);
+        }
+
+        public DynamicExcelBuilder AppendCellErrorValues(int startedRowIndex, int cellIndex)
+        {
+            var source = _excelContext.Entities;
+            var result = _excelContext.ResultDescriptors;
+            if (source.Count == 0) return this;
+            if (result.Count == 0) return this;
+
+            source.ForEach((item, index) =>
+            {
+                var row = _excelContext.Sheet.GetRow(startedRowIndex);
+                if (row == null) throw new ExcelException($"目标行 {startedRowIndex} 不存在");
+                var cell = row.GetCell(cellIndex);
+                if (cell == null) cell = row.CreateCell(row.LastCellNum);
+                if (!result[index].Success)
+                {
+                    cell.CellStyle = BuildCellStyle("Red");
+                    cell.SetCellValue(result[index].ErrorMessage);
+                }
+
+            });
+            return this;
+        }
+
         public DynamicExcelBuilder InsertCellValue()
         {
             var contentRowIndex = _excelContext.ContentRowIndex;
@@ -102,9 +163,12 @@ namespace ExcelCore
                 {
                     if (buckets[j] == -1) continue;
                     var prop = properties[buckets[j]];
+
                     var cell = rowInserting.CreateCell(j);
+
                     var value = prop.GetValue(entity);
                     if (value is null) continue;
+
                     // 判断错误
 
                     if (errorProps.Any(p => p.Name == prop.Name))
