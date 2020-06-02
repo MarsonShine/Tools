@@ -1,5 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <PackageId>MS.Personal.ExcelCore</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>marson shine</Authors>
+    <Company>MS</Company>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
