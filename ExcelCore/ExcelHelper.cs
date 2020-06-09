@@ -160,7 +160,7 @@ namespace ExcelCore {
                 ReadCellValueAndFillToList(propertys, list);
 
                 return list;
-            } catch (Exception ex) {
+            } catch (Exception) {
                 throw new Exception("模板解析错误，请确认导入的模板格式");
             }
         }
