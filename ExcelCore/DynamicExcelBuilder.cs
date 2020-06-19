@@ -1,14 +1,12 @@
-﻿using NPOI.SS.UserModel;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExcelCore
+﻿namespace ExcelCore
 {
+    using NPOI.SS.UserModel;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+
     public class DynamicExcelBuilder
     {
         private readonly ExcelContext _excelContext;
@@ -81,12 +79,20 @@ namespace ExcelCore
             return this;
         }
 
-        public DynamicExcelBuilder InsertCell(int rowIndex, int columnIndex, string columnValue, CellType cellType = CellType.String)
+        public DynamicExcelBuilder InsertCell(int rowIndex, int columnIndex, string columnValue, CellType cellType = CellType.String, bool isReplace = false)
         {
             var sheet = _excelContext.Sheet;
-            var titleRow = sheet.GetRow(rowIndex);
-            var cell = titleRow.CreateCell(columnIndex, cellType);
-            cell?.SetCellValue(columnValue);
+            var row = sheet.GetRow(rowIndex);
+            if (isReplace)
+            {
+                var originCell = row.GetCell(columnIndex);
+                originCell.SetCellValue(columnValue);
+            }
+            else
+            {
+                var cell = row.CreateCell(columnIndex, cellType);
+                cell?.SetCellValue(columnValue);
+            }
             return this;
         }
 
@@ -182,6 +188,18 @@ namespace ExcelCore
                 }
             }
 
+            return this;
+        }
+
+        public ISheet GetSheet(int sheetIndex)
+        {
+            var sheet = _excelContext.Workbook.GetSheetAt(sheetIndex);
+            return sheet;
+        }
+
+        public DynamicExcelBuilder SwitchSheet(int sheetIndex)
+        {
+            _excelContext.SwitchSheet(sheetIndex);
             return this;
         }
 
