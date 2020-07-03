@@ -14,7 +14,9 @@ namespace BBSS.Platform.Email.Stmp
 
         public async Task<SmtpClient> BuildClientAsync()
         {
-            var smtpClient = new SmtpClient(EmailSetting.Smtp.Host, EmailSetting.Smtp.Port);
+            var smtpClient = string.IsNullOrEmpty(EmailSetting.Smtp.Port) ?
+               new SmtpClient(EmailSetting.Smtp.Host) :
+               new SmtpClient(EmailSetting.Smtp.Host, int.Parse(EmailSetting.Smtp.Port));
             try
             {
                 if (EmailSetting.Smtp.EnableSsl)
