@@ -19,7 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enumeration.Test", "Enumera
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaptchaCore", "CaptchaCore\CaptchaCore.csproj", "{F23FB8BC-246F-4C90-A968-6D7DACD73095}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email", "Email\Email.csproj", "{6F086C33-69DD-4FA1-A597-14BC85E53023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email", "Email\Email.csproj", "{6F086C33-69DD-4FA1-A597-14BC85E53023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerModule", "LoggerModule\LoggerModule.csproj", "{EB44D53F-E20A-4326-9CD2-98D94947F230}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6F46EB34-812E-4BB9-A6D5-8C232D47EE9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerModuleTest", "LoggerModuleTest\LoggerModuleTest.csproj", "{7635A6A1-8D9C-4945-AD07-B5F837E34215}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +69,20 @@ Global
 		{6F086C33-69DD-4FA1-A597-14BC85E53023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F086C33-69DD-4FA1-A597-14BC85E53023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F086C33-69DD-4FA1-A597-14BC85E53023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB44D53F-E20A-4326-9CD2-98D94947F230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB44D53F-E20A-4326-9CD2-98D94947F230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB44D53F-E20A-4326-9CD2-98D94947F230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB44D53F-E20A-4326-9CD2-98D94947F230}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7635A6A1-8D9C-4945-AD07-B5F837E34215} = {6F46EB34-812E-4BB9-A6D5-8C232D47EE9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82D90C59-E841-4D7D-AACF-1F5A56136FC0}

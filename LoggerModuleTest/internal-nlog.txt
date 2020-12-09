@@ -1,0 +1,63 @@
+2020-12-09 18:18:17.5452 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:18:17.6035 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:18:17.6035 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:18:17.6035 Error Error parsing layout elapsed-time will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'elapsed-time'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.5651 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6229 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6229 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:19:53.6570 Error Error parsing layout elapsed-time will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'elapsed-time'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0277 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0844 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0844 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0857 Error Error parsing layout requestId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'requestId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0857 Error Error parsing layout userflag will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'userflag'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0857 Error Error parsing layout platformId will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'platformId'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
+2020-12-09 18:22:37.0857 Error Error parsing layout elapsed-time will be ignored. Exception: System.ArgumentException: LayoutRenderer cannot be found: 'elapsed-time'
+   at NLog.Config.Factory`2.CreateInstance(String itemName)
+   at NLog.Layouts.LayoutParser.GetLayoutRenderer(ConfigurationItemFactory configurationItemFactory, String name, Nullable`1 throwConfigExceptions)
