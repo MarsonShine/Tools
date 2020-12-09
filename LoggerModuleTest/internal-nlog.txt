@@ -566,3 +566,21 @@
    at NLog.LayoutRenderers.FuncLayoutRenderer.GetValue(LogEventInfo logEvent)
    at NLog.LayoutRenderers.FuncLayoutRenderer.Append(StringBuilder builder, LogEventInfo logEvent)
    at NLog.LayoutRenderers.LayoutRenderer.RenderAppendBuilder(LogEventInfo logEvent, StringBuilder builder)
+2020-12-09 23:02:34.1777 Warn Exception in layout renderer. Exception: System.NullReferenceException: Object reference not set to an instance of an object.
+   at LoggerModule.LoggerModuleExtensions.<>c.<RegisterLayoutRenderer>b__1_0(LogEventInfo logInfo, HttpContext context, LoggingConfiguration cfg) in /Users/summer/Desktop/毛帅/MSProject/ToolProjects/Tools/LoggerModule/LoggerModuleExtensions.cs:line 15
+   at NLog.Web.LayoutRenderers.AspNetLayoutRendererBase.<>c__DisplayClass8_0.<Register>g__NewFunc|0(LogEventInfo logEventInfo, LoggingConfiguration configuration)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.GetValue(LogEventInfo logEvent)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.Append(StringBuilder builder, LogEventInfo logEvent)
+   at NLog.LayoutRenderers.LayoutRenderer.RenderAppendBuilder(LogEventInfo logEvent, StringBuilder builder)
+2020-12-09 23:02:34.1785 Warn Exception in layout renderer. Exception: System.NullReferenceException: Object reference not set to an instance of an object.
+   at LoggerModule.LoggerModuleExtensions.<>c.<RegisterLayoutRenderer>b__1_2(LogEventInfo logInfo, HttpContext context, LoggingConfiguration cfg) in /Users/summer/Desktop/毛帅/MSProject/ToolProjects/Tools/LoggerModule/LoggerModuleExtensions.cs:line 18
+   at NLog.Web.LayoutRenderers.AspNetLayoutRendererBase.<>c__DisplayClass8_0.<Register>g__NewFunc|0(LogEventInfo logEventInfo, LoggingConfiguration configuration)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.GetValue(LogEventInfo logEvent)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.Append(StringBuilder builder, LogEventInfo logEvent)
+   at NLog.LayoutRenderers.LayoutRenderer.RenderAppendBuilder(LogEventInfo logEvent, StringBuilder builder)
+2020-12-09 23:02:34.1785 Warn Exception in layout renderer. Exception: System.NullReferenceException: Object reference not set to an instance of an object.
+   at LoggerModule.LoggerModuleExtensions.<>c.<RegisterLayoutRenderer>b__1_1(LogEventInfo logInfo, HttpContext context, LoggingConfiguration cfg) in /Users/summer/Desktop/毛帅/MSProject/ToolProjects/Tools/LoggerModule/LoggerModuleExtensions.cs:line 17
+   at NLog.Web.LayoutRenderers.AspNetLayoutRendererBase.<>c__DisplayClass8_0.<Register>g__NewFunc|0(LogEventInfo logEventInfo, LoggingConfiguration configuration)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.GetValue(LogEventInfo logEvent)
+   at NLog.LayoutRenderers.FuncLayoutRenderer.Append(StringBuilder builder, LogEventInfo logEvent)
+   at NLog.LayoutRenderers.LayoutRenderer.RenderAppendBuilder(LogEventInfo logEvent, StringBuilder builder)
