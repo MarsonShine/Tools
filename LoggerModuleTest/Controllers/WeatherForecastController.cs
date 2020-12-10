@@ -38,7 +38,7 @@ namespace LoggerModuleTest.Controllers
                 };
                 
                 _logger.LogInformation("一周天气预报，星期{index}天气为：{@weather}", index, weather);
-                _nlgger.Info("NLog;一周天气预报，星期{index}天气为：{@weather}", index, weather);
+                //_nlgger.Info("NLog;一周天气预报，星期{index}天气为：{@weather}", index, weather);
                 return weather;
             })
             .ToArray();
