@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog.Config;
+using NLog.Extensions.Logging;
 using NLog.Web;
 using NLog.Web.LayoutRenderers;
 using System;
@@ -43,6 +45,7 @@ namespace LoggerModuleTest
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
+                    logging.AddNLog();
                     logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .UseNLog();

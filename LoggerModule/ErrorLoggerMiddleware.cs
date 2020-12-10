@@ -14,9 +14,6 @@ namespace LoggerModule
     public class ErrorLoggerMiddleware
     {
         public readonly RequestDelegate _next;
-        // private string requestId;
-        // private string userflag;
-        // private string platformId;
 
         public ErrorLoggerMiddleware(RequestDelegate next)
         {
@@ -33,38 +30,11 @@ namespace LoggerModule
             {
                 var log = NLog.LogManager.GetCurrentClassLogger();
                 log.Error(ex,ex.Message);
-                // exactContext(context);
-                // LoggerFormatByConfig(ex);
             }
             finally
             {
 
             }
-
-            // void exactContext(HttpContext context)
-            // {
-            //     var headers = context.Request.Headers;
-
-            //     if (headers.TryGetValue("requestId", out var svs))
-            //         requestId = svs.ToString();
-            //     if (headers.TryGetValue("userflag", out svs))
-            //         userflag = svs.ToString();
-            //     if (headers.TryGetValue("platformId", out svs))
-            //         platformId = svs.ToString();
-            // }
         }
-
-        // private void LoggerFormatByConfig(Exception ex)
-        // {
-        //     var logInfo = new NLog.LogEventInfo() { Level = NLog.LogLevel.Error };
-        //     logInfo.Exception = ex;
-        //     logInfo.Message = ex.Message;
-        //     logInfo.Properties["requestId"] = requestId;
-        //     logInfo.Properties["userflag"] = userflag;
-        //     logInfo.Properties["platformId"] = platformId;
-        //     logInfo.Properties["message"] = ex.Message;
-        //     var log = NLog.LogManager.GetLogger(nameof(ErrorLoggerMiddleware));
-        //     log.Log(logInfo);
-        // }
     }
 }
