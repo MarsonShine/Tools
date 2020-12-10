@@ -28,8 +28,8 @@ namespace LoggerModule
             }
             catch (Exception ex)
             {
-                var log = NLog.LogManager.GetCurrentClassLogger();
-                log.Error(ex,ex.Message);
+                var log = NLog.LogManager.GetLogger(nameof(ErrorLoggerMiddleware));
+                log.Error(ex,"发生错误，错误消息 {exception} ",ex.Message);// 为什么这个记录在logstash没有layout，直接 log.Error(ex.Message) 则可以
             }
             finally
             {

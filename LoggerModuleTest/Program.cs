@@ -45,7 +45,7 @@ namespace LoggerModuleTest
                 .ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
-                    logging.AddNLog();
+                    // logging.AddNLog(); 加了就无法取到 context 的值
                     logging.SetMinimumLevel(LogLevel.Trace);
                 })
                 .UseNLog();
