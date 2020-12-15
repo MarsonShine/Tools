@@ -43,7 +43,7 @@ namespace LoggerModuleTest
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseMiddleware<LoggerModule.ErrorLoggerMiddleware>();
+            app.UseMiddleware<MSLoggerMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

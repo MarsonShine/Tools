@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
+using NLog.LayoutRenderers;
+using NLog.Targets;
 using NLog.Web;
 using NLog.Web.LayoutRenderers;
 
@@ -13,6 +15,7 @@ namespace LoggerModule
             // 自定义 layout renderer 一定要在加载 nlog.config 之前
             // 详情见 issue#4014：https://github.com/NLog/NLog/issues/4014#issuecomment-644997803
             RegisterLayoutRenderer();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton(NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
         }
 
@@ -21,6 +24,7 @@ namespace LoggerModule
             AspNetLayoutRendererBase.Register("requestId", (logInfo, context, cfg) => getHeaders(context, "requestId"));
             AspNetLayoutRendererBase.Register("platformId", (logInfo, context, cfg) => getHeaders(context, "platformId"));
             AspNetLayoutRendererBase.Register("userflag", (logInfo, context, cfg) => getHeaders(context, "userflag"));
+            LayoutRenderer.Register<RequestDurationLayoutRenderer>("RequestDuration");
 
             string getHeaders(HttpContext context, string key)
             {

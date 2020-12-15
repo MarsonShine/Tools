@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LoggerModule;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,19 @@ namespace LoggerModuleTest.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly NLog.Logger _nlgger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, NLog.Logger nlogger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _nlgger = nlogger;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
+
+            _logger.LogInformation("一周天气预报，星期{index}天气为：{@weather}", 1, "好天气");
+            //_logger.Log(LogLevel.Information, default, new MSLoggerEvent("一周天气预报，星期{index}天气为：{@weather}", 2, "坏天气").WithProperty("elapsedTime", getRequestElasedTime()), null, MSLoggerEvent.Formatter);
             return Enumerable.Range(1, 5).Select(index => {
                 var weather = new WeatherForecast
                 {
@@ -36,12 +38,26 @@ namespace LoggerModuleTest.Controllers
                     TemperatureC = rng.Next(-20, 55),
                     Summary = Summaries[rng.Next(Summaries.Length)]
                 };
-                
-                _logger.LogInformation("一周天气预报，星期{index}天气为：{@weather}", index, weather);
-                //_nlgger.Info("NLog;一周天气预报，星期{index}天气为：{@weather}", index, weather);
                 return weather;
             })
             .ToArray();
+        }
+        string getRequestElasedTime()
+        {
+            if (HttpContext != null)
+            {
+                var r = HttpContext.Items.TryGetValue("ElapsedTime", out object val);
+                if (r)
+                {
+                    var sw = (val as System.Diagnostics.Stopwatch);
+                    if (sw != null)
+                    {
+                        sw.Stop();
+                    }
+                    return sw.ElapsedMilliseconds + "ms";
+                }
+            }
+            return "";
         }
         [HttpGet("error")]
         public async Task<bool> ErrorHandle()

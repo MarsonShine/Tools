@@ -1,3 +1,4 @@
+using LoggerModule;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -42,11 +43,11 @@ namespace LoggerModuleTest
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureLogging(logging =>
+                .ConfigureLogging((context,logging) =>
                 {
                     logging.ClearProviders();
-                    // logging.AddNLog(); 加了就无法取到 context 的值
                     logging.SetMinimumLevel(LogLevel.Trace);
+                    //logging.AddNLog(); //加了就无法取到 context 的值
                 })
                 .UseNLog();
     }
