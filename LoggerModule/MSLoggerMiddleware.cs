@@ -23,20 +23,19 @@ namespace LoggerModule
             _logger = NLog.LogManager.GetLogger(nameof(MSLoggerMiddleware));
         }
 
-        Stopwatch sw;
         public async Task InvokeAsync(HttpContext context)
         {
-            sw = Stopwatch.StartNew();
+            var start = DateTimeOffset.Now.Ticks;
             try
             {
-                sw.Start();
-                _ = context.Items.TryAdd("ElapsedTime", sw);
+                _ = context.Items.TryAdd("ElapsedTime", start);
                 await _next(context);
             }
             catch (Exception ex)
             {
-                sw.Stop();
-                _logger.WithProperty("elapsedTime", sw.ElapsedMilliseconds + "ms")
+                var end = DateTimeOffset.Now.Ticks;
+                var timespan = new TimeSpan(end - start);
+                _logger.WithProperty("elapsedTime", timespan.TotalMilliseconds + "ms")
                     .Error(ex, "发生错误，错误消息 {exception} ", ex.Message);
             }
             finally

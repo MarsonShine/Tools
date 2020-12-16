@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoggerModule
+namespace LoggerModule.LayoutRenderers
 {
     [LayoutRenderer("aspnet-request-duration")]
     [ThreadSafe]
@@ -31,12 +31,11 @@ namespace LoggerModule
                     var r = context.Items.TryGetValue("ElapsedTime", out object val);
                     if (r)
                     {
-                        var sw = (val as Stopwatch);
-                        if (sw != null)
+                        var timespan = new TimeSpan(DateTimeOffset.Now.Ticks - (long)val);
+                        if (timespan != TimeSpan.Zero)
                         {
-                            sw.Stop();
+                            return timespan.TotalMilliseconds + "ms";
                         }
-                        return sw.ElapsedMilliseconds + "ms";
                     }
                 }
                 return "";
