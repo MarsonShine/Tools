@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LoggerModule
@@ -16,11 +16,20 @@ namespace LoggerModule
     {
         public readonly RequestDelegate _next;
         private readonly NLog.Logger _logger;
-        public MSLoggerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, IHttpContextAccessor accessor)
+        public MSLoggerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, IHttpContextAccessor accessor, IHostApplicationLifetime lifetime)
         {
             _next = next;
             loggerFactory.AddMSLogger(accessor);
-            _logger = NLog.LogManager.GetLogger(nameof(MSLoggerMiddleware));
+            _logger = LogManager.GetLogger(nameof(MSLoggerMiddleware));
+
+            SafeStopLogger(lifetime);
+        }
+
+        private void SafeStopLogger(IHostApplicationLifetime lifetime)
+        {
+            lifetime.ApplicationStopped.Register(() => {
+                LogManager.Shutdown();
+            });
         }
 
         public async Task InvokeAsync(HttpContext context)

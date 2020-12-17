@@ -41,7 +41,6 @@ namespace LoggerModuleTest
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseMiddleware<MSLoggerMiddleware>();
             app.UseEndpoints(endpoints =>

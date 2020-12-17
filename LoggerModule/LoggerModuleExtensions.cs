@@ -1,9 +1,10 @@
 using LoggerModule.LayoutRenderers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NLog.LayoutRenderers;
-using NLog.Targets;
 using NLog.Web;
 using NLog.Web.LayoutRenderers;
 
@@ -38,6 +39,18 @@ namespace LoggerModule
                 else
                     return default;
             }
+        }
+    }
+
+    public static class LoggerHostBuilderExtensions
+    {
+        public static IHostBuilder ConfigurePlatformLogging(this IHostBuilder hostBuilder)
+        {
+            return hostBuilder.ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.SetMinimumLevel(LogLevel.Information);
+            }).UseNLog();
         }
     }
 }

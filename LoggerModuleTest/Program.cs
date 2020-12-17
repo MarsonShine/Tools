@@ -43,12 +43,6 @@ namespace LoggerModuleTest
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                .ConfigureLogging((context,logging) =>
-                {
-                    logging.ClearProviders();
-                    logging.SetMinimumLevel(LogLevel.Trace);
-                    //logging.AddNLog(); //加了就无法取到 context 的值
-                })
-                .UseNLog();
+                .ConfigurePlatformLogging();
     }
 }
