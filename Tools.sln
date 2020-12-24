@@ -21,11 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaptchaCore", "CaptchaCore\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Email", "Email\Email.csproj", "{6F086C33-69DD-4FA1-A597-14BC85E53023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerModule", "LoggerModule\LoggerModule.csproj", "{EB44D53F-E20A-4326-9CD2-98D94947F230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerModule", "LoggerModule\LoggerModule.csproj", "{EB44D53F-E20A-4326-9CD2-98D94947F230}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6F46EB34-812E-4BB9-A6D5-8C232D47EE9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerModuleTest", "LoggerModuleTest\LoggerModuleTest.csproj", "{7635A6A1-8D9C-4945-AD07-B5F837E34215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerModuleTest", "LoggerModuleTest\LoggerModuleTest.csproj", "{7635A6A1-8D9C-4945-AD07-B5F837E34215}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncQueryableExtensions", "AsyncQueryableExtensions\AsyncQueryableExtensions.csproj", "{B2B08500-9327-488C-B927-A762644D4A32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7635A6A1-8D9C-4945-AD07-B5F837E34215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2B08500-9327-488C-B927-A762644D4A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2B08500-9327-488C-B927-A762644D4A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2B08500-9327-488C-B927-A762644D4A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2B08500-9327-488C-B927-A762644D4A32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
