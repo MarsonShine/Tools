@@ -1,10 +1,12 @@
-﻿using LoggerModule.LogEnrichers;
+﻿using LoggerModule.Configs;
+using LoggerModule.LogEnrichers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using Serilog;
 using Serilog.Events;
+using System;
 
 namespace LoggerModule
 {
@@ -26,14 +28,20 @@ namespace LoggerModule
             }).UseNLog();
         }
 
-        public IHostBuilder SerilogConfiguration()
+        public IHostBuilder SerilogConfiguration(Action<LoggerConfig> config = null)
         {
             return _builder.ConfigureWebHost(webhostBuilder =>
             {
+                var option = new LoggerConfig();
+                config(option);
+
                 webhostBuilder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .Enrich.FromLogContext()
                     .ReadFrom.Configuration(hostingContext.Configuration)
-                    .WriteTo.RollingFile("logs/log-{Hour}.log", outputTemplate: "[{RequestId}] [{Timestamp:HH:mm:ss} [{AppRequestId} {PlatformId} {UserFlag}] {Level:u3}] {Message:lj} {NewLine}{Exception}"));
+                    .WriteTo.RollingFile(option.PathFileName, 
+                    outputTemplate: option.MessageTemplate, 
+                    fileSizeLimitBytes: option.FileSizeLimit)
+                    );
             }).ConfigureLogging(logging =>
             {
                 logging.ClearProviders();
