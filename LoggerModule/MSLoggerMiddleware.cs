@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LoggerModule.LogEnrichers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog;
+using Serilog;
+using Serilog.Context;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LoggerModule
@@ -15,42 +18,53 @@ namespace LoggerModule
     public class MSLoggerMiddleware
     {
         public readonly RequestDelegate _next;
-        private readonly NLog.Logger _logger;
         public MSLoggerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, IHttpContextAccessor accessor, IHostApplicationLifetime lifetime)
         {
             _next = next;
             loggerFactory.AddMSLogger(accessor);
-            _logger = LogManager.GetLogger(nameof(MSLoggerMiddleware));
-
-            SafeStopLogger(lifetime);
+            //_logger = LogManager.GetLogger(nameof(MSLoggerMiddleware));
+            //SafeStopLogger(lifetime);
         }
 
         private void SafeStopLogger(IHostApplicationLifetime lifetime)
         {
-            lifetime.ApplicationStopped.Register(() => {
+            lifetime.ApplicationStopped.Register(() =>
+            {
                 LogManager.Shutdown();
             });
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var start = DateTimeOffset.Now.Ticks;
+            //var start = DateTimeOffset.Now.Ticks;
             try
             {
-                _ = context.Items.TryAdd("ElapsedTime", start);
+                //_ = context.Items.TryAdd("ElapsedTime", start);
+                LogContext.Push(new AspNetRequestEnricher(context));
                 await _next(context);
             }
             catch (Exception ex)
             {
-                var end = DateTimeOffset.Now.Ticks;
-                var timespan = new TimeSpan(end - start);
-                _logger.WithProperty("elapsedTime", timespan.TotalMilliseconds + "ms")
+                //var end = DateTimeOffset.Now.Ticks;
+                //var timespan = new TimeSpan(end - start);
+                Log
+                    //.ForContext("ElapsedTime", timespan.TotalMilliseconds + "ms")
                     .Error(ex, "发生错误，错误消息 {exception} ", ex.Message);
             }
             finally
             {
 
             }
+        }
+    }
+
+
+    public static class PlatformLoggingApplicationBuilderExtensions
+    {
+        public static void UsePlatformLogger(this IApplicationBuilder builder)
+        {
+            builder.UseSerilogRequestLogging();
+            builder.UseMiddleware<MSLoggerMiddleware>();
         }
     }
 }

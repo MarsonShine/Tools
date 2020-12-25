@@ -8,5 +8,9 @@
     <ProjectReference Include="..\LoggerModule\LoggerModule.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="logs\" />
+  </ItemGroup>
+
 
 </Project>

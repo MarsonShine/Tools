@@ -36,7 +36,7 @@ namespace LoggerModuleTest.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             };
 
-            _logger.PLogInformation("一周天气预报，星期{index}天气为：{@weather}", 1, w);
+            _logger.LogInformation("一周天气预报，星期{index}天气为：{weather}", 1, w);
             //_logger.PLogInformation("一周天气预报，星期{index}天气为：{weather}", 1, "好天气");
             //_logger.Log(LogLevel.Information, default, new MSLoggerEvent("一周天气预报，星期{index}天气为：{@weather}", 2, "坏天气").WithProperty("elapsedTime", getRequestElasedTime()), null, MSLoggerEvent.Formatter);
             return Enumerable.Range(1, 5).Select(index => {
