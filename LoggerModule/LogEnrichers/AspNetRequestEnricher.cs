@@ -17,8 +17,8 @@ namespace LoggerModule.LogEnrichers
 
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            logEvent.AddOrUpdateProperty(
-                propertyFactory.CreateProperty("RequestId", getHeaders(_context, "RequestId"))
+            logEvent.AddPropertyIfAbsent(
+                propertyFactory.CreateProperty("AppRequestId", getHeaders(_context, "RequestId"))
                 );
             logEvent.AddPropertyIfAbsent(
                 propertyFactory.CreateProperty("PlatformId", getHeaders(_context, "PlatformId"))

@@ -33,7 +33,7 @@ namespace LoggerModule
                 webhostBuilder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .Enrich.FromLogContext()
                     .ReadFrom.Configuration(hostingContext.Configuration)
-                    .WriteTo.RollingFile("logs/log-{Hour}.log", outputTemplate: "[{Timestamp:HH:mm:ss} [{RequestId} {PlatformId} {UserFlag}] {Level:u3}] {Message:lj} {NewLine}{Exception}"));
+                    .WriteTo.RollingFile("logs/log-{Hour}.log", outputTemplate: "[{RequestId}] [{Timestamp:HH:mm:ss} [{AppRequestId} {PlatformId} {UserFlag}] {Level:u3}] {Message:lj} {NewLine}{Exception}"));
             }).ConfigureLogging(logging =>
             {
                 logging.ClearProviders();
