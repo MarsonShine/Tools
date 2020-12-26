@@ -61,10 +61,19 @@ namespace LoggerModule
 
     public static class PlatformLoggingApplicationBuilderExtensions
     {
-        public static void UsePlatformLogger(this IApplicationBuilder builder)
+        public static void UsePlatformLogger(this IApplicationBuilder builder, LoggerComponent loggerComponent = LoggerComponent.NLog)
         {
-            builder.UseSerilogRequestLogging();
-            builder.UseMiddleware<MSLoggerMiddleware>();
+            switch (loggerComponent)
+            {
+                case LoggerComponent.NLog:
+                    builder.UseMiddleware<MSLoggerMiddleware>();
+                    break;
+                case LoggerComponent.Serilog:
+                    builder.UseSerilogRequestLogging();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
