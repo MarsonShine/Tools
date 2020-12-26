@@ -9,6 +9,7 @@ using Serilog.Context;
 using System;
 using System.Threading.Tasks;
 
+// TODO: 最佳实践应该是不同的日志组件分在不同的模块中,归类到不同的dll中发布
 namespace LoggerModule
 {
     /// <summary>
