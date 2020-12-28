@@ -33,13 +33,14 @@ namespace LoggerModule
             return _builder.ConfigureWebHost(webhostBuilder =>
             {
                 var option = new LoggerConfig();
-                config(option);
+                if (config != null)
+                    config(option);
 
                 webhostBuilder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .Enrich.FromLogContext()
                     .ReadFrom.Configuration(hostingContext.Configuration)
-                    .WriteTo.RollingFile(option.PathFileName, 
-                    outputTemplate: option.MessageTemplate, 
+                    .WriteTo.RollingFile(option.PathFileName,
+                    outputTemplate: option.MessageTemplate,
                     fileSizeLimitBytes: option.FileSizeLimit)
                     );
             }).ConfigureLogging(logging =>

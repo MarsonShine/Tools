@@ -47,6 +47,7 @@ namespace LoggerModuleTest
                 .ConfigurePlatformLogging((configuration) =>
                 {
                     configuration.SerilogConfiguration();
+                    //configuration.NLogConfiguration();
                 });
     }
 }

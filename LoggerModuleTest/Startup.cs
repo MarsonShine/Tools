@@ -28,7 +28,9 @@ namespace LoggerModuleTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMSLoggerService();
+            services.AddMSLoggerService()
+                //.WithNLogger()
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +44,7 @@ namespace LoggerModuleTest
             //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UsePlatformLogger();
+            app.UsePlatformLogger(LoggerComponent.Serilog);
             
             app.UseEndpoints(endpoints =>
             {
