@@ -24,16 +24,22 @@ namespace LoggerModule.Middwares
                 LogContext.Push(new AspNetRequestEnricher(context));
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (True(() => Log.Error(ex, "发生错误，错误消息 {exception} ", ex.Message)))
             {
                 Log
                     //.ForContext("ElapsedTime", timespan.TotalMilliseconds + "ms")
-                    .Error(ex, "发生错误，错误消息 {exception} ", ex.Message);
+                    .Error(ex, "发生错误2，错误消息 {exception} ", ex.Message);
             }
             finally
             {
 
             }
+        }
+
+        private bool True(Action action)
+        {
+            action();
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LoggerModule.LogEnrichers;
+using LoggerModule.Middwares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
@@ -44,18 +45,24 @@ namespace LoggerModule
                 LogContext.Push(new AspNetRequestEnricher(context));
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (True(() => Log.Error(ex, "发生错误，错误消息 {exception} ", ex.Message)))
             {
                 //var end = DateTimeOffset.Now.Ticks;
                 //var timespan = new TimeSpan(end - start);
-                Log
-                    //.ForContext("ElapsedTime", timespan.TotalMilliseconds + "ms")
-                    .Error(ex, "发生错误，错误消息 {exception} ", ex.Message);
+                //Log
+                //.ForContext("ElapsedTime", timespan.TotalMilliseconds + "ms")
+                //.Error(ex, "发生错误，错误消息 {exception} ", ex.Message);
             }
             finally
             {
 
             }
+        }
+
+        private bool True(Action action)
+        {
+            action();
+            return true;
         }
     }
 
@@ -70,6 +77,7 @@ namespace LoggerModule
                     builder.UseMiddleware<MSLoggerMiddleware>();
                     break;
                 case LoggerComponent.Serilog:
+                    builder.UseMiddleware<SerilogMiddleware>();
                     builder.UseSerilogRequestLogging();
                     break;
                 default:
