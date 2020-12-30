@@ -35,19 +35,19 @@ namespace LoggerModule.Performance
         public static void PLogInformation<T1, T2, T3, T4>(this ILogger logger, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
             var message = new OptimisedLoggingMessage(logger);
-            var pmessage = message.Define<T1, T2, T3, T4>(LogLevel.Information, 3, format);
+            var pmessage = message.Define<T1, T2, T3, T4>(LogLevel.Information, 4, format);
             pmessage(logger, arg1, arg2, arg3, arg4, null);
         }
         public static void PLogInformation<T1, T2, T3, T4, T5>(this ILogger logger, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
         {
             var message = new OptimisedLoggingMessage(logger);
-            var pmessage = message.Define<T1, T2, T3, T4, T5>(LogLevel.Information, 3, format);
+            var pmessage = message.Define<T1, T2, T3, T4, T5>(LogLevel.Information, 5, format);
             pmessage(logger, arg1, arg2, arg3, arg4, arg5, null);
         }
         public static void PLogInformation<T1, T2, T3, T4, T5, T6>(this ILogger logger, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
         {
             var message = new OptimisedLoggingMessage(logger);
-            var pmessage = message.Define<T1, T2, T3, T4, T5, T6>(LogLevel.Information, 3, format);
+            var pmessage = message.Define<T1, T2, T3, T4, T5, T6>(LogLevel.Information, 6, format);
             pmessage(logger, arg1, arg2, arg3, arg4, arg5, arg6, null);
         }
 
