@@ -1,12 +1,11 @@
-﻿using LoggerModule.LayoutRenderers;
+﻿using LoggerModule.Configs;
+using LoggerModule.LayoutRenderers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NLog.LayoutRenderers;
 using NLog.Web;
 using NLog.Web.LayoutRenderers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LoggerModule
 {
@@ -18,10 +17,14 @@ namespace LoggerModule
             _services = services;
         }
 
-        public void WithNLogger()
+        public void WithNLogger(Action<LoggerConfig> config)
         {
             // 自定义 layout renderer 一定要在加载 nlog.config 之前
             // 详情见 issue#4014：https://github.com/NLog/NLog/issues/4014#issuecomment-644997803
+            var loggerConfig = new LoggerConfig();
+            config?.Invoke(loggerConfig);
+            AspNetLayoutRendererBase.Register("NetAddress", (_, _, _) => loggerConfig.NetAddress);
+            AspNetLayoutRendererBase.Register("LogLevel", (_, _, _) => loggerConfig.LogLevel);
             RegisterLayoutRenderer();
             _services.AddSingleton(NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger());
         }

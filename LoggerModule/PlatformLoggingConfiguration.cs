@@ -19,12 +19,15 @@ namespace LoggerModule
             _builder = builder;
         }
 
-        public IHostBuilder NLogConfiguration()
+        public IHostBuilder NLogConfiguration(LogLevel? logLevel = null)
         {
             return _builder.ConfigureLogging(logging =>
             {
                 logging.ClearProviders();
-                logging.SetMinimumLevel(LogLevel.Information);
+                if (logLevel.HasValue)
+                {
+                    logging.SetMinimumLevel(logLevel.Value);
+                }
             }).UseNLog();
         }
 
@@ -33,8 +36,7 @@ namespace LoggerModule
             return _builder.ConfigureWebHost(webhostBuilder =>
             {
                 var option = new LoggerConfig();
-                if (config != null)
-                    config(option);
+                config?.Invoke(option);
 
                 webhostBuilder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .Enrich.FromLogContext()
