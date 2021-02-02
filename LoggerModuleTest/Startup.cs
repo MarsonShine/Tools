@@ -1,4 +1,5 @@
 using LoggerModule;
+using LoggerModule.Grpcs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,8 @@ namespace LoggerModuleTest
             services.AddMSLoggerService()
                 //.WithNLogger()
                 ;
+            // grpc
+            services.AddGrpcLoggerService(logconf => logconf.LogLevel = "Information");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

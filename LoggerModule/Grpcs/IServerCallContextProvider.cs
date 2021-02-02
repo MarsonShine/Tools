@@ -1,6 +1,6 @@
 using Grpc.Core;
 
-namespace Grpcs
+namespace LoggerModule.Grpcs
 {
     public interface IServerCallContextProvider
     {

@@ -13,6 +13,11 @@ namespace LoggerModule
 {
     public static class LoggerModuleExtensions
     {
+        /// <summary>
+        /// 日志模板，请使用 ${event-properties:propertyName}
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static MSLoggerBuilder AddMSLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
